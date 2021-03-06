@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="performanceProcessId" name="绩效流程" isExecutable="true">
+    <startEvent id="startevent1" name="Start"/>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"/>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="exclusivegateway1"/>
+    <userTask id="fillPlanId" name="填写计划" activiti:assignee="${fillPlanEmp}"/>
+    <sequenceFlow id="flow2" name="是" sourceRef="exclusivegateway1" targetRef="fillPlanId">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isFillPlan=="Y"}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="beginEvaluationId" name="开始评估" activiti:assignee="beginEvaluationEmp"/>
+    <userTask id="collectionIndicatorId" name="收集指标" activiti:assignee="collectionIndicatorEmp"/>
+    <sequenceFlow id="flow5" sourceRef="beginEvaluationId" targetRef="collectionIndicatorId">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isCollection=="Y"}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="selfEvaluationId" name="自评" activiti:assignee="${selfEvaluationEmp}"/>
+    <sequenceFlow id="flow6" sourceRef="collectionIndicatorId" targetRef="selfEvaluationId">
+      <extensionElements>
+        <activiti:executionListener event="take" delegateExpression="${checkIndicatorFinishedListener}"/>
+      </extensionElements>
+    </sequenceFlow>
+    <userTask id="leaderEvaluationId" name="复评" activiti:assignee="${leaderEvaluationEmp}">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="leaderEvaluationList" activiti:elementVariable="leaderEvaluationEmp">
+        <loopCardinality>${leaderEvaluationNum}</loopCardinality>
+        <completionCondition>${nrOfCompletedInstances/nrOfInstances==1}</completionCondition>
+      </multiInstanceLoopCharacteristics>
+    </userTask>
+    <sequenceFlow id="flow7" sourceRef="selfEvaluationId" targetRef="leaderEvaluationId">
+      <extensionElements>
+        <activiti:executionListener event="take" delegateExpression="${leaderEvaluationListener}"/>
+      </extensionElements>
+    </sequenceFlow>
+    <userTask id="gradeConfirmId" name="评分确认" activiti:assignee="${gradeConfirmEmp}"/>
+    <endEvent id="endevent1" name="End"/>
+    <sequenceFlow id="flow9" sourceRef="gradeConfirmId" targetRef="endevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isConfirmPass=="Y"}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="gradeComplaintId" name="评分申诉" activiti:assignee="gradeComplaintDealEmp"/>
+    <sequenceFlow id="flow10" sourceRef="gradeConfirmId" targetRef="gradeComplaintId">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isConfirmPass=="N"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="gradeComplaintId" targetRef="gradeConfirmId"/>
+    <sequenceFlow id="flow14" sourceRef="beginEvaluationId" targetRef="selfEvaluationId">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isCollection=="N"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow15" name="否" sourceRef="exclusivegateway1" targetRef="beginEvaluationId">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isFillPlan=="N"}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway" default="flow17"/>
+    <sequenceFlow id="flow17" sourceRef="exclusivegateway3" targetRef="beginEvaluationId">
+      <extensionElements>
+        <activiti:executionListener event="take" delegateExpression="${leaderCheckFinishedListener}"/>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="flow18" sourceRef="exclusivegateway3" targetRef="fillPlanId">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isReCheckPlanPass=="N"}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="checkConfirm" name="复审" activiti:assignee="${reviewConfirmEmp}"/>
+    <sequenceFlow id="flow19" sourceRef="leaderEvaluationId" targetRef="checkConfirm">
+      <extensionElements>
+        <activiti:executionListener event="take" delegateExpression="${leaderEvaluationFinishedListener}"/>
+      </extensionElements>
+    </sequenceFlow>
+    <userTask id="finalConfirm" name="最终确认" activiti:assignee="${finalConfirmEmp}"/>
+    <sequenceFlow id="flow20" sourceRef="checkConfirm" targetRef="finalConfirm"/>
+    <sequenceFlow id="flow21" sourceRef="finalConfirm" targetRef="gradeConfirmId"/>
+    <userTask id="reCheckPlanId" name="复审人复审" activiti:assignee="${reviewCheckEmp}"/>
+    <sequenceFlow id="flow23" sourceRef="reCheckPlanId" targetRef="exclusivegateway3"/>
+    <userTask id="checkPlanId" name="审批计划" activiti:assignee="${leaderCheckEmp}">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="leaderCheckList" activiti:elementVariable="leaderCheckEmp">
+        <loopCardinality>${leaderCheckNum}</loopCardinality>
+        <completionCondition>${nrOfCompletedInstances/nrOfInstances==1}</completionCondition>
+      </multiInstanceLoopCharacteristics>
+    </userTask>
+    <sequenceFlow id="flow24" sourceRef="fillPlanId" targetRef="checkPlanId">
+      <extensionElements>
+        <activiti:executionListener event="take" delegateExpression="${checkPlanFlowListener}"/>
+      </extensionElements>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway" default="flow27"/>
+    <sequenceFlow id="flow26" sourceRef="checkPlanId" targetRef="exclusivegateway4"/>
+    <sequenceFlow id="flow27" sourceRef="exclusivegateway4" targetRef="reCheckPlanId"/>
+    <sequenceFlow id="flow28" sourceRef="exclusivegateway4" targetRef="fillPlanId">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${isCheckPlanPass=="N"}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_performanceProcessId">
+    <bpmndi:BPMNPlane bpmnElement="performanceProcessId" id="BPMNPlane_performanceProcessId">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="225.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="120.0" y="222.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="fillPlanId" id="BPMNShape_fillPlanId">
+        <omgdc:Bounds height="55.0" width="105.0" x="201.0" y="215.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="beginEvaluationId" id="BPMNShape_beginEvaluationId">
+        <omgdc:Bounds height="55.0" width="105.0" x="549.0" y="215.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="collectionIndicatorId" id="BPMNShape_collectionIndicatorId">
+        <omgdc:Bounds height="55.0" width="105.0" x="739.0" y="215.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="selfEvaluationId" id="BPMNShape_selfEvaluationId">
+        <omgdc:Bounds height="55.0" width="105.0" x="739.0" y="335.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="leaderEvaluationId" id="BPMNShape_leaderEvaluationId">
+        <omgdc:Bounds height="55.0" width="105.0" x="739.0" y="415.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gradeConfirmId" id="BPMNShape_gradeConfirmId">
+        <omgdc:Bounds height="55.0" width="105.0" x="305.0" y="413.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="340.0" y="513.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gradeComplaintId" id="BPMNShape_gradeComplaintId">
+        <omgdc:Bounds height="55.0" width="105.0" x="56.0" y="413.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway3" id="BPMNShape_exclusivegateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="372.0" y="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="checkConfirm" id="BPMNShape_checkConfirm">
+        <omgdc:Bounds height="55.0" width="105.0" x="579.0" y="415.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="finalConfirm" id="BPMNShape_finalConfirm">
+        <omgdc:Bounds height="55.0" width="105.0" x="439.0" y="415.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="reCheckPlanId" id="BPMNShape_reCheckPlanId">
+        <omgdc:Bounds height="55.0" width="105.0" x="340.0" y="90.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="checkPlanId" id="BPMNShape_checkPlanId">
+        <omgdc:Bounds height="55.0" width="105.0" x="340.0" y="215.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="BPMNShape_exclusivegateway4">
+        <omgdc:Bounds height="40.0" width="40.0" x="372.0" y="160.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="75.0" y="242.0"/>
+        <omgdi:waypoint x="120.0" y="242.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="160.0" y="242.0"/>
+        <omgdi:waypoint x="201.0" y="242.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="11.0" x="160.0" y="242.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="654.0" y="242.0"/>
+        <omgdi:waypoint x="739.0" y="242.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="791.0" y="270.0"/>
+        <omgdi:waypoint x="791.0" y="335.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="791.0" y="390.0"/>
+        <omgdi:waypoint x="791.0" y="415.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="357.0" y="468.0"/>
+        <omgdi:waypoint x="357.0" y="513.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="305.0" y="440.0"/>
+        <omgdi:waypoint x="161.0" y="440.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="108.0" y="413.0"/>
+        <omgdi:waypoint x="108.0" y="397.0"/>
+        <omgdi:waypoint x="259.0" y="397.0"/>
+        <omgdi:waypoint x="357.0" y="413.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="601.0" y="270.0"/>
+        <omgdi:waypoint x="603.0" y="361.0"/>
+        <omgdi:waypoint x="645.0" y="361.0"/>
+        <omgdi:waypoint x="689.0" y="361.0"/>
+        <omgdi:waypoint x="739.0" y="362.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="140.0" y="262.0"/>
+        <omgdi:waypoint x="140.0" y="362.0"/>
+        <omgdi:waypoint x="601.0" y="362.0"/>
+        <omgdi:waypoint x="601.0" y="270.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="11.0" x="120.0" y="270.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+        <omgdi:waypoint x="412.0" y="50.0"/>
+        <omgdi:waypoint x="475.0" y="50.0"/>
+        <omgdi:waypoint x="475.0" y="144.0"/>
+        <omgdi:waypoint x="475.0" y="242.0"/>
+        <omgdi:waypoint x="549.0" y="242.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
+        <omgdi:waypoint x="372.0" y="50.0"/>
+        <omgdi:waypoint x="253.0" y="50.0"/>
+        <omgdi:waypoint x="253.0" y="215.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
+        <omgdi:waypoint x="739.0" y="442.0"/>
+        <omgdi:waypoint x="684.0" y="442.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
+        <omgdi:waypoint x="579.0" y="442.0"/>
+        <omgdi:waypoint x="544.0" y="442.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="439.0" y="442.0"/>
+        <omgdi:waypoint x="410.0" y="440.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
+        <omgdi:waypoint x="392.0" y="90.0"/>
+        <omgdi:waypoint x="392.0" y="70.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+        <omgdi:waypoint x="306.0" y="242.0"/>
+        <omgdi:waypoint x="340.0" y="242.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
+        <omgdi:waypoint x="392.0" y="215.0"/>
+        <omgdi:waypoint x="392.0" y="200.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27">
+        <omgdi:waypoint x="392.0" y="160.0"/>
+        <omgdi:waypoint x="392.0" y="145.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
+        <omgdi:waypoint x="372.0" y="180.0"/>
+        <omgdi:waypoint x="253.0" y="179.0"/>
+        <omgdi:waypoint x="253.0" y="215.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

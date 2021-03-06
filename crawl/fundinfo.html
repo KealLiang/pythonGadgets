@@ -1,0 +1,1322 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>持仓详情 - 车子</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <script src="https://acdn.aniu.com.cn/superfund/js/lib.c52896d8.js"></script>
+    
+
+<meta name="format-detection" content="telephone=no" />
+<script src="https://acdn.aniu.com.cn/superfund/js/cp.cfaff6ee.js"></script>
+<script>
+    !function(n){
+        var  e=n.document,
+             t=e.documentElement,
+             i=720,
+             d=i/100,
+             o="orientationchange"in n?"orientationchange":"resize",
+             a=function(){
+                 var n=t.clientWidth||320;n>720&&(n=720);
+                 t.style.fontSize=n/d/2.604+"px"
+             };
+             a()
+             e.addEventListener&&(n.addEventListener(o,a,!1),e.addEventListener("DOMContentLoaded",a,!1))
+    }(window);
+</script>
+
+
+<link rel="stylesheet" href="https://acdn.aniu.com.cn/superfund/css/aniu_icon.9034b571.css">
+<script>
+    $(function() {
+        function initFloatNav() {
+            $('body').append('<div class="suspend_button" style="display:none;">\n' +
+            '    <div class="suspend_pop" id="suspend_pop"></div>\n' +
+            '    <div class="excircle suspend_show" id="excircle">\n' +
+            '        <div class="suspend_btn"></div>\n' +
+            '    </div>\n' +
+            '    <div class="tab_pop" id="tab_pop">\n' +
+            '        <ul>\n' +
+            '            <li class="clearfix">\n' +
+            '                <p class="tab_name">我的</p>\n' +
+            '                <p class="tab_icon wode" onclick="window.location.href=\'/superfund/myconfig/\'"><i class="iconfont icon-wode1" style="margin-top: .1rem;"></i></p>\n' +
+            '            </li>\n' +
+            '            <li class="clearfix">\n' +
+            '                <p class="tab_name">保险</p>\n' +
+            '                <p class="tab_icon baoxian" onclick="window.location.href=\'/superfund/yanxuanbaoxian/\'"><i class="iconfont icon-baoxian" style="margin-top: .2rem;"></i></p>\n' +
+            '            </li>\n' +
+            '            <li class="clearfix">\n' +
+            '                <p class="tab_name">定期</p>\n' +
+            '                <p class="tab_icon dingqi" onclick="window.location.href=\'/superfund/v/xy_product_list/\'"><i class="iconfont icon-dingqi" style="margin-top: .1rem;"></i></p>\n' +
+            '            </li>\n' +
+            '            <li class="clearfix">\n' +
+            '                <p class="tab_name">脚印</p>\n' +
+            '                <p class="tab_icon jiaoyin" onclick="window.location.href=\'/superfund/newfootprint/\'"><i class="iconfont icon-xuanfu-jiaoyin" style="margin-top: .2rem;"></i></p>\n' +
+            '            </li>\n' +
+            '            <li class="clearfix">\n' +
+            '                <p class="tab_name">定投</p>\n' +
+            '                <p class="tab_icon dingtou" onclick="window.location.href=\'/superfund/check_account/\'"><i class="iconfont icon-dingtou" style="margin-top: .1rem;"></i></p>\n' +
+            '            </li>\n' +
+            '        </ul>\n' +
+            '    </div>\n' +
+            '</div>');
+            $('#excircle').on('click',function() {
+                $(this).removeClass('suspend_show').siblings().addClass('suspend_show')
+            })
+            $('#suspend_pop').on('click', function() {
+                $(this).removeClass('suspend_show').siblings().addClass('suspend_show')
+                $('#tab_pop').removeClass('suspend_show')
+            })
+            setInterval(function() {
+                QuickFloat()
+            }, 1000);
+            function QuickFloat() {
+                if (window.location.host != 'm.aniu.com.cn') {
+                    $(".suspend_button").hide()
+                } else if (!/(superfund\/newfootprint\/|app_licai_book\/|superfund\/check_account\/|superfund\/v\/xy_product_list\/|superfund\/v\/registration_success\/|superfund\/v\/insurance_buy\/|superfund\/v\/zixun\/|superfund\/yanxuanbaoxian\/|superfund\/myconfig\/|cp\/index\/|app_licai_book\/qrcodes_aniuke\/|^\/v\/.*)$/.test(window.location.pathname)) {
+                    $(".suspend_button").show()
+                } else {
+                    $(".suspend_button").hide()
+                }
+            }
+            QuickFloat()
+        }
+        try {
+            function execInitFloatNav() {
+                if ($('body')[0]) {
+                    initFloatNav()
+                } else {
+                    setTimeout(execInitFloatNav, 1000)
+                }
+            }
+            execInitFloatNav()
+        } catch (e) {
+            ReportJsError(e)
+        }
+    })
+</script>
+<script>
+    // 问题：iphone手机在软键盘收起后，页面会整体上滑，导致点击对应元素的事件不生效，需要点击对应元素靠上大概20px~30px位置处才会生效。
+    // 解决：使用这个方法可以解决软件盘收起后，页面回到软件盘弹起前的位置。
+    (/iphone|ipod|ipad/i.test(navigator.appVersion)) && document.addEventListener('blur', function (e) {
+        document.body.scrollIntoView(false)
+    }, true)
+</script>
+
+    <link rel="stylesheet" href="https://acdn.aniu.com.cn/superfund/css/uilib.d7a34241.css">
+    <link rel="stylesheet" href="https://acdn.aniu.com.cn/superfund/css/index.4238fb4b.css">
+    <link rel="stylesheet" href="https://acdn.aniu.com.cn/superfund/css/spage.3556b406.css">
+    <style type="text/css">
+        .chicang-container .back-icon .icon-fanhui:before{
+            height: auto;
+            font-size: inherit;
+            color: inherit;
+        }
+        .chicang-container .chicang-header .icon-chakanxiangqing:before{
+            height: auto;
+            font-size: inherit;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <input type='hidden' name='csrfmiddlewaretoken' value='R8f7fEW87ui1PUD6svzuXalpfstLxEih' />
+    <div class="chicang-container" style="margin: 0 auto;max-width: 640px; min-height: 100%;">
+        <div class="chicang-header">
+            <a onclick="window.history.back()" href="javascript:;" class="back-icon"><i class="icon-fanhui"></i></a>
+        </div>
+        <div style="line-height: 1.6rem;padding-left: .75rem;color: #6a6a6a;">
+            <p style="float: left;color: #888">隐藏持仓为0的基金</p> 
+            <input id="hidezero" class="mui-switch mui-switch-anim" type="checkbox" checked  style="transform: scale(0.7,0.7);"/>
+        </div>
+        <div class="chicang-content">
+            <ul class="list">
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">上证50指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">易方达上证50指数A 110003</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.7538元（2020年01月23日 -2.8%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">沪深300指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">博时沪深300指数C 002385</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.5056元（2020年01月23日 -2.89%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证小盘500指数 195.92元</p>
+                            <div class="title-right">
+                                <p class="real-percent">13.99%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0.00" data-holding="199.11">
+                                        <p class="info-title">南方中证500量化增强C 002907</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0.00元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            
+                                            <p style="color: #fd7d3d;">持有份额</p>
+                                            <p style="color: #fd7d3d;">
+                                            199.11份（0.00份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>1.0748元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.9840元（2020年01月23日 -3.24%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>-18.08元（-8.45%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证1000指数 439.92元</p>
+                            <div class="title-right">
+                                <p class="real-percent">31.42%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0.00" data-holding="458.44">
+                                        <p class="info-title">招商中证1000指数增强C 004195</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0.00元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            
+                                            <p style="color: #fd7d3d;">持有份额</p>
+                                            <p style="color: #fd7d3d;">
+                                            458.44份（0.00份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.9271元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.9596元（2020年01月23日 -3.36%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>14.92元（+3.51%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证红利指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">富国中证红利指数增强 100032</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.1310元（2020年01月23日 -2.58%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">创业板指数 234.14元</p>
+                            <div class="title-right">
+                                <p class="real-percent">16.72%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0.00" data-holding="246.90">
+                                        <p class="info-title">南方创业板ETF联接C 004343</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0.00元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            
+                                            <p style="color: #fd7d3d;">持有份额</p>
+                                            <p style="color: #fd7d3d;">
+                                            246.90份（0.00份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.8667元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.9483元（2020年01月23日 -3.14%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>20.14元（+9.41%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">美国标准普尔500指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">易方达标普500指数QDII 161125</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.4501元（2020年01月22日 +0.37%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">博时标普500ETF联接QDII 050025</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>2.5763元（2020年01月22日 +0.37%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">大成标普500等权重指数QDII 096001</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.9470元（2020年01月22日 +0.21%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">美国纳斯达克100指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">华安纳斯达克100指数QDII 040046</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>2.8020元（2020年01月22日 +0.5%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">大成纳斯达克100指数QDII 000834</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>2.2220元（2020年01月22日 +0.59%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">德国DAX指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">华安德国30(DAX)ETF联接QDII 000614</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.2080元（2020年01月22日 -0.08%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">香港恒生指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">汇添富恒生指数分级QDII 164705</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.1850元（2020年01月23日 -1.5%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">华夏沪港通恒生ETF联接 000948</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.2869元（2020年01月21日 -2.79%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证全指原材料指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0.00" data-holding="0.0">
+                                        <p class="info-title">广发中证全指原材料ETF联接C 002975</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0.00元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0.00份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.8700元（2018年08月20日 -0.45%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>-49.09元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证全指可选消费指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">广发中证全指可选消费ETF联接C 002977</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.7420元（2020年01月23日 -3.39%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证全指医药卫生指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">广发中证全指医药卫生ETF联接C 002978</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.8928元（2020年01月23日 -1.77%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证全指金融地产指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">广发中证全指金融地产ETF联接C 002979</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.0929元（2020年01月23日 -2.93%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证全指信息技术指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">广发中证全指信息技术ETF联接C 002974</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.1726元（2020年01月23日 -3.46%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证环保产业指数 340.53元</p>
+                            <div class="title-right">
+                                <p class="real-percent">24.32%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0.00" data-holding="557.42">
+                                        <p class="info-title">广发中证环保产业指数C 002984</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0.00元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            
+                                            <p style="color: #fd7d3d;">持有份额</p>
+                                            <p style="color: #fd7d3d;">
+                                            557.42份（0.00份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.7624元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.6109元（2020年01月23日 -3.2%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>-84.47元（-19.88%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证养老产业指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">广发中证养老产业指数C 002982</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.0017元（2020年01月23日 -2.44%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证军工指数 189.80元</p>
+                            <div class="title-right">
+                                <p class="real-percent">13.55%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0.00" data-holding="293.36">
+                                        <p class="info-title">前海开源中证军工指数C 002199</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0.00元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            
+                                            <p style="color: #fd7d3d;">持有份额</p>
+                                            <p style="color: #fd7d3d;">
+                                            293.36份（0.00份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.7090元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.6470元（2020年01月23日 -2.12%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>-18.20元（-8.75%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证传媒指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">广发中证传媒ETF联接C 004753</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.8756元（2020年01月23日 -2.52%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证内地资源主题指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">民生中证资源指数 690008</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>0.6290元（2020年01月23日 -2.63%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+                    <li class="list-item js-asset">
+                        <div class="item-title">
+                            <p class="title-left">中证主要消费指数 0.00元</p>
+                            <div class="title-right">
+                                <p class="real-percent">0.00%</p>
+                                
+                            </div>
+                        </div>
+                        <div class="item-con">
+                            <ul class="detail-list">
+                                
+                                    <li class="detail-item js-fund" data-ontheway="0" data-holding="0.0">
+                                        <p class="info-title">汇添富中证主要消费ETF联接 000248</p>
+                                        
+                                        <div class="info-detail-item">
+                                            
+                                            <p>待确认金额</p>
+                                            <p>0元</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                               
+                                            <p>持有份额</p>
+                                            <p>0.0份（0份赎回中）</p>
+                                            
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有单位成本</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>当前净值</p>
+                                            <p>1.9329元（2020年01月23日 -3.82%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>持有收益</p>
+                                            <p>0.0元（0.0%）</p>
+                                        </div>
+                                        <div class="info-detail-item">
+                                            <p>已取现收益</p>
+                                            <p>0.0元</p>
+                                        </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <script src="https://acdn.aniu.com.cn/superfund/js/lib.c52896d8.js"></script>
+    <script>
+        function hide_zero_fund() {
+            $(".js-fund").each(function() {
+                var ontheway = parseFloat($(this).attr('data-ontheway'))
+                var holding = parseFloat($(this).attr('data-holding'))
+                if (ontheway == 0 && holding == 0) {
+                    $(this).hide()
+                }
+            })
+        }
+        function hide_zero_asset() {
+            $(".js-asset").each(function() {
+                if ($(this).find('.js-fund').filter(':visible').length == 0) {
+                    $(this).hide()
+                }
+            })
+        }
+        function show_all_fund() {
+            $(".js-asset").show()
+            $(".js-fund").show()
+        }
+
+        hide_zero_fund()
+        hide_zero_asset()
+
+        $("#hidezero").change(function() {
+            if (this.checked) {
+                hide_zero_fund()
+                hide_zero_asset()
+            } else {
+                show_all_fund()
+            }
+        })
+    </script>    
+</body>
+</html>
